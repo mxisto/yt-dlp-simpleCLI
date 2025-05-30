@@ -5,6 +5,8 @@ import os
 
 # VARIABLES, FLAGS and CHECKS
 # ______________
+os.environ['TERM'] = 'xterm'
+
 browser_cookie_check = False
 metadata_check = False
 subs_check = False
@@ -48,6 +50,7 @@ __               __            ____
  / /    / /_/ / /_/_____/ /_/ / / /_/ /
 /_/_____\__, /\__/      \__,_/_/ .___/ 
  /_____/____/      simple CLI /_/
+ 
  version 0.0.1 - by MxEmexis    
 """)
 
@@ -56,13 +59,18 @@ def set_combo():
     global download_combo, cookies_flag, folder_path
     download_combo = ytdlp_bin + formato + (" ") + video_link + (" --no-part --restrict-filenames")
 
-    if metadata_check == True:
-        download_combo+=metadata_flag
-    elif subs_check == True:
-        download_combo+=subs_flag
-    elif browser_cookie_check == True:
-        cookies_flag+=str(" ")+browser_name
-        download_combo+=cookies_flag
+    try:
+        if metadata_check == True:
+            download_combo+=metadata_flag
+        elif subs_check == True:
+            download_combo+=subs_flag
+        elif browser_cookie_check == True:
+            cookies_flag+=str(" ")+browser_name
+            download_combo+=cookies_flag
+        elif folder_check == True:
+            download_combo+=str(" -P ")+folder_path
+    except:
+        print("A error occurred.")
 
     args = shlex.split(download_combo)
     a=' '.join(args)
@@ -126,7 +134,7 @@ while True:
             browser_cookie_check = True
 
         elif comando == "p":
-            path_confirm = str(input("do you want to use the default folder or set another? (default is /Videos)\n(d) for default, (y) for set a new one, (n) for none: "))
+            path_confirm = str(input("do you want to use the default folder or set another? (default is user/Videos)\n(d) for default, (y) for set a new one, (n) for none, save in the same path as executable\n: "))
             if path_confirm == "y":
                 p=str(input("Please set the new folder path: "))
                 with open('ytdlp-path.txt','w') as f:
@@ -135,8 +143,10 @@ while True:
                     folder_path = f.read()
                 folder_check = True
             elif path_confirm == "d":
+                user_name = subprocess.run(['whoami'], capture_output=True, text=True).stdout.strip()
+                user_name_path = str("/home/")+str(user_name)+str("/Videos")
                 with open('ytdlp-path.txt','w') as f:
-                    f.write("/Videos")
+                    f.write(user_name_path)
                 with open('ytdlp-path.txt') as f:
                     folder_path = f.read()
                 folder_check = True
@@ -165,5 +175,7 @@ while True:
 
     except ValueError:
         print("Invalid option, try again...")
+
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 

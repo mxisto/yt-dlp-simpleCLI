@@ -14,3 +14,4 @@ build/yt-dlp_simpleCLI/warn-yt-dlp_simpleCLI.txt
 build/yt-dlp_simpleCLI/xref-yt-dlp_simpleCLI.html
 build/yt-dlp_simpleCLI/yt-dlp_simpleCLI.pkg
 dist/yt-dlp_simpleCLI
+ytdlp-path.txt
