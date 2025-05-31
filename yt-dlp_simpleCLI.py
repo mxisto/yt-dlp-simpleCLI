@@ -22,14 +22,17 @@ cookies_flag = str(" --cookies from browser")
 folder_path_flag = str(" -P")
 
 ytdlp_bin = ""
+user_name= ""
 
-# check for OS and change the yt-dlp binary name accordingly
+# check for OS and change the yt-dlp binary name accordingly, also the username
 system = platform.system()
 if system == "Linux":
     ytdlp_bin = "./yt-dlp"
+    user_name = subprocess.run(['whoami'], capture_output=True, text=True).stdout.strip()
     print ("System: Linux")
 elif system == "Windows":
     ytdlp_bin = "yt-dlp.exe"
+    user_name = os.environ['USERNAME']
     print ("System: Windows")
 
 download_combo = ""
@@ -39,6 +42,7 @@ try:
     f = open('ytdlp-path.txt','x')
 except FileExistsError:
     print("File for path read already created as ytdlp-path.txt")
+    folder_check = True
 with open('ytdlp-path.txt') as f:
     folder_path = f.read()
 
@@ -51,32 +55,41 @@ __               __            ____
 /_/_____\__, /\__/      \__,_/_/ .___/ 
  /_____/____/      simple CLI /_/
  
- version 0.0.1 - by MxEmexis    
+ version 0.0.2 - by MxEmexis    
 """)
+
+print(f"Hello, {user_name}! What we are going to download today? :3")
 
 # process for URL download
 def set_combo():
     global download_combo, cookies_flag, folder_path
     download_combo = ytdlp_bin + formato + (" ") + video_link + (" --no-part --restrict-filenames")
 
-    try:
-        if metadata_check == True:
-            download_combo+=metadata_flag
-        elif subs_check == True:
-            download_combo+=subs_flag
-        elif browser_cookie_check == True:
-            cookies_flag+=str(" ")+browser_name
-            download_combo+=cookies_flag
-        elif folder_check == True:
-            download_combo+=str(" -P ")+folder_path
+    if metadata_check == True:
+        download_combo+=metadata_flag
+            
+    if subs_check == True:
+        download_combo+=subs_flag
+            
+    if browser_cookie_check == True:
+        cookies_flag+=str(" ")+browser_name
+        download_combo+=cookies_flag
+        
+    if folder_check == True:
+        download_combo+=str(" -P ")+folder_path
+
+    try: # fix for running shlex on windows due to the backslash thing
+        if system == "Linux":
+            args = shlex.split(download_combo, posix=True)
+        elif system == "Windows":
+            args = shlex.split(download_combo, posix=False)
+        a=' '.join(args)
     except:
-        print("A error occurred.")
+        print ("A error ocurred in the shlex process")
+    
+    print(f"Running as: {a}")
 
-    args = shlex.split(download_combo)
-    a=' '.join(args)
-    print(a)
-
-    # note: the subprocess method should be better here, however it create some problems with yt-dlp due to the
+    # note: the subprocess method should be better here, however it creates some problems with yt-dlp due to the
     # way it runs, so I replaced it with the following command, that, although it is said to be less secure due to
     # potential shell injection vulnerabilities, it is the only way to make yt-dlp work without spilling errors
     # or corrupting the files in the download process
@@ -84,6 +97,8 @@ def set_combo():
 
 # main loop
 while True:
+    os.system('cls' if os.name == 'nt' else 'clear') # clears the last operation from the shell
+    
     print("____________________________")
     print("i) to insert URL | f) media formats\nb) set browser cookies | p) set folder path\nr) reset parameters | q) to quit")
     print("----------------------------")
@@ -134,7 +149,7 @@ while True:
             browser_cookie_check = True
 
         elif comando == "p":
-            path_confirm = str(input("do you want to use the default folder or set another? (default is user/Videos)\n(d) for default, (y) for set a new one, (n) for none, save in the same path as executable\n: "))
+            path_confirm = str(input("do you want to use the default folder or set another? (default is $user/Videos)\n(d) for default, (y) for set a new one, (n) for none, save in the same path as executable\n: "))
             if path_confirm == "y":
                 p=str(input("Please set the new folder path: "))
                 with open('ytdlp-path.txt','w') as f:
@@ -143,8 +158,10 @@ while True:
                     folder_path = f.read()
                 folder_check = True
             elif path_confirm == "d":
-                user_name = subprocess.run(['whoami'], capture_output=True, text=True).stdout.strip()
-                user_name_path = str("/home/")+str(user_name)+str("/Videos")
+                if system == "Linux":
+                    user_name_path = str("/home/")+str(user_name)+str("/Videos")
+                elif system == "Windows":
+                    user_name_path = str('C:\\Users\\')+str(user_name)+str("\\Videos")
                 with open('ytdlp-path.txt','w') as f:
                     f.write(user_name_path)
                 with open('ytdlp-path.txt') as f:
@@ -173,9 +190,8 @@ while True:
         else:
             print("Not a recognized command, try again...")
 
+    except NameError:
+        print("Did you forgot to add something?")
+    
     except ValueError:
         print("Invalid option, try again...")
-
-    os.system('cls' if os.name == 'nt' else 'clear')
-
-
