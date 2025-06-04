@@ -97,7 +97,6 @@ def set_combo():
 
 # main loop
 while True:
-    os.system('cls' if os.name == 'nt' else 'clear') # clears the last operation from the shell
     
     print("____________________________")
     print("i) to insert URL | f) media formats\nb) set browser cookies | p) set folder path\nr) reset parameters | q) to quit")
@@ -195,3 +194,5 @@ while True:
     
     except ValueError:
         print("Invalid option, try again...")
+
+    os.system('cls' if os.name == 'nt' else 'clear')  # clears the last operation from the shell
