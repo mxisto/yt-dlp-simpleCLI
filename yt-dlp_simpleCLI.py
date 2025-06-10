@@ -99,7 +99,7 @@ def set_combo():
 while True:
     
     print("____________________________")
-    print("i) to insert URL | f) media formats\nb) set browser cookies | p) set folder path\nr) reset parameters | q) to quit")
+    print("i) to insert URL | f) media formats\nb) browser cookies | p) set folder path\nr) reset parameters | c) clear screen\nq) to quit")
     print("----------------------------")
     print(f"Format: {format_name}")
     print(f"Mp3 Metadata: {metadata_check} | Video Subtitles: {subs_check}")
@@ -109,6 +109,7 @@ while True:
 
     try:
         if comando == "i":
+            os.system('cls' if os.name == 'nt' else 'clear')  # clears the last operation from the shell
             video_link=str(input("Insert URL: "))
             set_combo()
 
@@ -142,10 +143,12 @@ while True:
                 format_name = str("Mp3")
             else:
                 print("Invalid command, try again...")
+            os.system('cls' if os.name == 'nt' else 'clear')  # clears the last operation from the shell
 
         elif comando == "b":
             browser_name = str(input("Select Browser name...\nSupported browsers are: brave, chrome, chromium, edge,\nfirefox, opera, safari, vivaldi, whale.\nYou must be logged in on the targeted website.\n:"))
             browser_cookie_check = True
+            os.system('cls' if os.name == 'nt' else 'clear')  # clears the last operation from the shell
 
         elif comando == "p":
             path_confirm = str(input("do you want to use the default folder or set another? (default is $user/Videos)\n(d) for default, (y) for set a new one, (n) for none, save in the same path as executable\n: "))
@@ -170,6 +173,7 @@ while True:
                 folder_check = False
             else:
                 print("Not a recognized command.")
+            os.system('cls' if os.name == 'nt' else 'clear')  # clears the last operation from the shell
 
         elif comando == "r":
             print("1) browser cookies | 2) metadata | 3) subtitles")
@@ -182,6 +186,10 @@ while True:
                 subs_check = False
             else:
                 print("Invalid command.")
+            os.system('cls' if os.name == 'nt' else 'clear')  # clears the last operation from the shell
+
+        elif comando == "c":
+            os.system('cls' if os.name == 'nt' else 'clear')  # clears the last operation from the shell
 
         elif comando == "q":
             print("Bye bye!")
@@ -190,9 +198,7 @@ while True:
             print("Not a recognized command, try again...")
 
     except NameError:
-        print("Did you forgot to add something?")
+        print("Did you forgot to add something? Check your options again!")
     
     except ValueError:
         print("Invalid option, try again...")
-
-    os.system('cls' if os.name == 'nt' else 'clear')  # clears the last operation from the shell
