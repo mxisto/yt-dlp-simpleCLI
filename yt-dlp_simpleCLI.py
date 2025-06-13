@@ -27,7 +27,7 @@ user_name= ""
 # check for OS and change the yt-dlp binary name accordingly, also the username
 system = platform.system()
 if system == "Linux":
-    ytdlp_bin = "./yt-dlp"
+    ytdlp_bin = "yt-dlp" # if using the individual binary, change to ./yt-dlp (executable must be in the same folder as program)
     user_name = subprocess.run(['whoami'], capture_output=True, text=True).stdout.strip()
     print ("System: Linux")
 elif system == "Windows":
