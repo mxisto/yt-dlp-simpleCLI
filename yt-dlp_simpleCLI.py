@@ -27,7 +27,7 @@ user_name= ""
 # check for OS and change the yt-dlp binary name accordingly, also the username
 system = platform.system()
 if system == "Linux":
-    ytdlp_bin = "yt-dlp" # if using the individual binary, change to ./yt-dlp (executable must be in the same folder as program)
+    ytdlp_bin = "yt-dlp"
     user_name = subprocess.run(['whoami'], capture_output=True, text=True).stdout.strip()
     print ("System: Linux")
 elif system == "Windows":
@@ -55,7 +55,7 @@ __               __            ____
 /_/_____\__, /\__/      \__,_/_/ .___/ 
  /_____/____/      simple CLI /_/
  
- version 0.0.2 - by MxEmexis    
+ version 0.0.3   
 """)
 
 print(f"Hello, {user_name}! What we are going to download today? :3")
@@ -95,16 +95,28 @@ def set_combo():
     # or corrupting the files in the download process
     os.system(a)
 
+# command for update the yt-dlp binary from inside the program
+def ytdlp_update():
+	os.system('yt-dlp -U')
+
 # main loop
 while True:
-    
-    print("____________________________")
-    print("i) to insert URL | f) media formats\nb) browser cookies | p) set folder path\nr) reset parameters | c) clear screen\nq) to quit")
+	
     print("----------------------------")
     print(f"Format: {format_name}")
     print(f"Mp3 Metadata: {metadata_check} | Video Subtitles: {subs_check}")
     print(f"Browser Cookies: {browser_name} | Folder path: {folder_path}")
-    print("____________________________")
+    
+    print(r"""
+----------------------------
+    
+i) to insert URL    |   f) media format
+b) browser cookies  |   p) set folder path
+r) reset parameters |   c) clear screen
+u) update yt-dlp    |   q) quit
+____________________________
+""")
+    
     comando=str(input("Select a option: "))
 
     try:
@@ -112,6 +124,7 @@ while True:
             os.system('cls' if os.name == 'nt' else 'clear')  # clears the last operation from the shell
             video_link=str(input("Insert URL: "))
             set_combo()
+            input("Press Enter to continue...")
 
         elif comando == "f":
             print("Please select the media format:")
@@ -190,9 +203,14 @@ while True:
 
         elif comando == "c":
             os.system('cls' if os.name == 'nt' else 'clear')  # clears the last operation from the shell
-
+            
+        elif comando == "u":
+            ytdlp_update()
+            input("Press Enter to continue...")
+            os.system('cls' if os.name == 'nt' else 'clear')
+			
         elif comando == "q":
-            print("Bye bye!")
+            print("Bye bye! (^.^)/")
             break
         else:
             print("Not a recognized command, try again...")
