@@ -15,7 +15,7 @@ Command-line utility to interact with yt-dlp
 The goal is to do a even simpler approach to interact with the yt-dlp binary via terminal.
 
 ## To be used with the standalone yt-dlp binary
-This program is originally set to work with the standalone `yt-dlp` binary that is available [here](https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp). Since it is not recommended to use the binaries from your distro repo or pip as they generally are outdated (at least on Debian-based distros anyway), I generally put this file in `/usr/local/bin/`, you can do something similar in Windows using [Cmder](https://cmder.app).
+This program is originally set to work with the standalone `yt-dlp` binary that is available [here](https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp). Since it is not recommended to use the binaries from your distro repo or pip as they generally are outdated (at least on Debian-based distros anyway), I generally put this file in `/usr/local/share/applications/`, you can do something similar in Windows using [Cmder](https://cmder.app).
 
 ## Funcionalities
 
