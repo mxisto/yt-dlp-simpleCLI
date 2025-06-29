@@ -99,6 +99,22 @@ def set_combo():
 def ytdlp_update():
 	os.system('yt-dlp -U')
 
+# command for streaming media using mpv
+def mpv_play():
+
+    if system == "Linux":
+        mpv_bin = "mpv"
+    elif system == "Windows":
+        mpv_bin = "mpv.exe"
+
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print("Stream online media via MPV")
+    video_link=str(input("Insert URL: "))
+    mpv_run=str(f"mpv {video_link}")
+    os.system(mpv_run)
+    input("Press Enter to continue...")
+#______________________________________________________________________________
+
 # main loop
 while True:
 	
@@ -113,7 +129,8 @@ while True:
 i) to insert URL    |   f) media format
 b) browser cookies  |   p) set folder path
 r) reset parameters |   c) clear screen
-u) update yt-dlp    |   q) quit
+u) update yt-dlp    |   m) stream media (mpv)
+q) quit
 ____________________________
 """)
     
@@ -203,6 +220,9 @@ ____________________________
 
         elif comando == "c":
             os.system('cls' if os.name == 'nt' else 'clear')  # clears the last operation from the shell
+
+        elif comando == "m":
+            mpv_play()
             
         elif comando == "u":
             ytdlp_update()
