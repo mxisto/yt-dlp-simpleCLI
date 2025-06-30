@@ -110,7 +110,7 @@ def mpv_play():
     os.system('cls' if os.name == 'nt' else 'clear')
     print("Stream online media via MPV")
     video_link=str(input("Insert URL: "))
-    mpv_run=str(f"mpv {video_link}")
+    mpv_run=str(f"{mpv_bin} {video_link}")
     os.system(mpv_run)
     input("Press Enter to continue...")
 #______________________________________________________________________________
