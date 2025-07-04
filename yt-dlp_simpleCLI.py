@@ -23,7 +23,7 @@ cookies_flag = str(" --cookies from browser")
 folder_path_flag = str(" -P")
 
 ytdlp_bin = ""
-mpv_bin=""
+mpv_bin="mpv"
 folder_path = ""
 user_name= ""
 
