@@ -51,7 +51,7 @@ __               __            ____
 /_/_____\__, /\__/      \__,_/_/ .___/ 
  /_____/____/      simple CLI /_/
  
- version 0.0.4   
+ version 0.0.5   
 """)
 
 print(cool_logo)
@@ -135,10 +135,12 @@ def mpv_play():
     global mpv_custom_flag, mpv_bin
 
     os.system('cls' if os.name == 'nt' else 'clear')
-    print(f"Stream online media via {mpv_bin} | type m) to set a custom Mplayer")
+    print(f"Stream online media via {mpv_bin}\ntype m) to set a custom Mplayer | q) to go back to the menu")
     video_link=str(input("Insert URL: "))
     if video_link=="m":
         mpv_sel()
+    elif video_link=="q":
+        clrscreen()
     else:
         mpv_run=str(f"{mpv_bin} {video_link}")
         print(mpv_run)

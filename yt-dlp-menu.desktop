@@ -1,0 +1,19 @@
+# template for placing in /.local/share/applications/
+
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=yt-dlp Menu
+Comment=Menu for yt-dlp
+
+# write your executable path in the following fields below
+Path=
+# 
+Exec= python3 yt-dlp_simpleCLI.py
+# set a custom icon here
+Icon=/usr/share/icons/Papirus/16x16/apps/youtube-dl.svg
+
+Terminal=true
+Categories=Accessories
+StartupNotify=false
+PrefersNonDefaultGPU=false
