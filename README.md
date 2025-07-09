@@ -36,4 +36,4 @@ This program is originally set to work with both the standalone `yt-dlp` binary 
 You can simply run the code via the python interpreter, because building a executable via `pyinstaller` may lead to some permission errors when downloading in some situations, since it runs shell commands in the end of the day. The build scripts are included for those who want to try.
 
 ***
-At the moment, the focus is working in Linux, tests on Windows have been few at least for the time being.
+At the moment, the focus is working in Linux (more specifically, Arch, Ubuntu and Debian based distros), tests on Windows have been few at least for the time being.
