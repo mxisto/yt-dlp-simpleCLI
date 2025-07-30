@@ -10,7 +10,7 @@ os.environ['TERM'] = 'xterm'
 browser_cookie_check = False
 metadata_check = False
 subs_check = False
-folder_check = False
+folder_check = True
 mpv_custom_flag = False
 
 video_link = str("")
@@ -24,7 +24,7 @@ folder_path_flag = str(" -P")
 
 ytdlp_bin = ""
 mpv_bin="mpv"
-folder_path = ""
+#folder_path = ""
 user_name= ""
 
 # check for OS and change the yt-dlp binary name and folder path accordingly, also the username
