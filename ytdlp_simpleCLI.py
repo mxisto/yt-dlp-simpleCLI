@@ -38,7 +38,7 @@ if system == "Linux":
 elif system == "Windows":
     ytdlp_bin = "yt-dlp.exe"
     user_name = os.environ['USERNAME']
-    folder_path= str(fr"C:\Users\{user_name}\Videos\\")
+    folder_path= str(f"C:\\Users\\{user_name}\\Videos\\")
     print ("System: Windows")
 
 download_combo = ""
