@@ -1,3 +1,3 @@
 @echo off
 
-pyinstaller --onefile yt-dlp_simpleCLI.py
+pyinstaller --onefile ytdlp_simpleCLI.py

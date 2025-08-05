@@ -24,8 +24,9 @@ folder_path_flag = str(" -P")
 
 ytdlp_bin = ""
 mpv_bin="mpv"
-#folder_path = ""
 user_name= ""
+
+videos={}
 
 # check for OS and change the yt-dlp binary name and folder path accordingly, also the username
 system = platform.system()
@@ -37,7 +38,7 @@ if system == "Linux":
 elif system == "Windows":
     ytdlp_bin = "yt-dlp.exe"
     user_name = os.environ['USERNAME']
-    folder_path= str(fr"C:\Users\{user_name}\Videos")
+    folder_path= str(fr"C:\Users\{user_name}\Videos\\")
     print ("System: Windows")
 
 download_combo = ""
@@ -51,7 +52,7 @@ __               __            ____
 /_/_____\__, /\__/      \__,_/_/ .___/ 
  /_____/____/      simple CLI /_/
  
- version 0.0.5   
+ version 0.0.6   
 """)
 
 print(cool_logo)
@@ -64,7 +65,7 @@ print(f"Hello, {user_name}! What we are going to download today? :3")
 # process for URL download
 def set_combo():
     global download_combo, cookies_flag, folder_path
-    download_combo = ytdlp_bin + formato + (" ") + video_link + (" --no-part --restrict-filenames")
+    download_combo = ytdlp_bin + formato + (" ") + video_link + (" --restrict-filenames")
 
     if metadata_check == True:
         download_combo+=metadata_flag
@@ -102,7 +103,12 @@ def clrscreen():
 
 # command for update the yt-dlp binary from inside the program
 def ytdlp_update():
-	os.system('yt-dlp -U')
+    if system == "Linux":
+        os.system('yt-dlp -U')
+
+    elif system == "Windows":
+        os.system('yt-dlp.exe -U')
+
 # selection of custom mpv frontend
 def mpv_sel():
         global mpv_custom_flag, mpv_bin
@@ -233,6 +239,33 @@ def reset_sel():
         print("Invalid command.")
     clrscreen()
 
+#saves the links into a csv file on the set directory
+def link_to_csv():
+    global videos
+    try:
+        table=open(f'{folder_path}ytlinks.csv','x',encoding="UTF-8")
+    except FileExistsError:
+        print(f"URL history already created at {folder_path} as 'ytlinks.csv'.")
+        table=open(f'{folder_path}ytlinks.csv','a',encoding="UTF-8")
+
+    print("Getting URL info, please wait...")
+
+    get_title=str(f"{ytdlp_bin} --print '%(title)s' {video_link}")
+    get_title=subprocess.run(get_title,shell=True, capture_output=True, text=True)
+    title=get_title.stdout.strip()
+
+    get_channel=str(f"{ytdlp_bin} --print '%(channel)s' {video_link}")
+    get_channel=subprocess.run(get_channel,shell=True, capture_output=True, text=True)
+    channel=get_channel.stdout.strip()
+
+    vd_link=video_link.strip('https://')
+
+    videos[title]={'channel':channel,'link':vd_link}
+
+    for title, data in videos.items():
+        table.write(f'{title};{channel};{vd_link}\n')
+        print(f"{title} added to download history...")
+
 # help and informations about the program
 def helpinfo():
     clrscreen()
@@ -269,6 +302,7 @@ ____________________________
         if comando == "i":
             clrscreen()
             video_link=str(input("Insert URL: "))
+            link_to_csv()
             set_combo()
             input("Press Enter to continue...")
 

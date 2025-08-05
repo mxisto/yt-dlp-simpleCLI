@@ -20,12 +20,14 @@ This program is originally set to work with both the standalone `yt-dlp` binary 
 
 - specify between mp4 and mp3 downloads, with or without subtitles and metadata, respectively
 - stream online media (using mpv)
+- saves history of downloaded links in a csv file
 
 ## Libraries used
 
 - `platform`
 - `shlex`
 - `os`
+- `subprocess`
 
 ## Packages needed in PATH
 
