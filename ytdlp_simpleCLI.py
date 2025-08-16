@@ -1,3 +1,18 @@
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#  
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#  
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+#  MA 02110-1301, USA.
+
 import platform
 import shlex
 import subprocess
@@ -62,8 +77,8 @@ print(f"Hello, {user_name}! What we are going to download today? :3")
 
 # FUNCTIONS
 
-# process for URL download
 def set_combo():
+    '''process for URL download, it combines the strings into a command to execute in the shell'''
     global download_combo, cookies_flag, folder_path
     download_combo = ytdlp_bin + formato + (" ") + video_link + (" --restrict-filenames")
 
@@ -97,47 +112,48 @@ def set_combo():
     # or corrupting the files in the download process
     os.system(a)
 
-# function to clear the screen, it is used in a lot of places in the code
+
 def clrscreen():
+    '''function to clear the screen, it is used in a lot of places in the code'''
     os.system('cls' if os.name == 'nt' else 'clear')  # clears the last operation from the shell
 
-# command for update the yt-dlp binary from inside the program
 def ytdlp_update():
+    '''command to update the yt-dlp binary from inside the program'''
     if system == "Linux":
         os.system('yt-dlp -U')
 
     elif system == "Windows":
         os.system('yt-dlp.exe -U')
 
-# selection of custom mpv frontend
 def mpv_sel():
-        global mpv_custom_flag, mpv_bin
+    '''selection of custom mpv frontend'''
+    global mpv_custom_flag, mpv_bin
         
-        print("Are you using a mpv frontend? MPV is set as default.\nDo you want to set another one? (ex. Celluloid, Haruna, SMPlayer, etc...)")
-        a=input("Yes (y) - Use custom | No - Use default MPV (n): ")
+    print("Are you using a mpv frontend? MPV is set as default.\nDo you want to set another one? (ex. Celluloid, Haruna, SMPlayer, etc...)")
+    a=input("Yes (y) - Use custom | No - Use default MPV (n): ")
 
-        try:
-            if a == "y":
-                mpv_bin=str(input("Type the name: "))
-                mpv_bin=mpv_bin.lower()
-                mpv_custom_flag = True
-    
-            elif a == "n":
-                if system == "Linux":
-                    mpv_bin = "mpv"
-                elif system == "Windows":
-                    mpv_bin = "mpv.exe"
-                    
-                mpv_custom_flag = False
-            mpv_play()
-        except NameError:
-            print("Invalid name. Check your options again!")
-        except ValueError:
-            print("Invalid option, try again...")
+    try:
+        if a == "y":
+            mpv_bin=str(input("Type the name: "))
+            mpv_bin=mpv_bin.lower()
+            mpv_custom_flag = True
+
+        elif a == "n":
+            if system == "Linux":
+                mpv_bin = "mpv"
+            elif system == "Windows":
+                mpv_bin = "mpv.exe"
+                
+            mpv_custom_flag = False
+        mpv_play()
+    except NameError:
+        print("Invalid name. Check your options again!")
+    except ValueError:
+        print("Invalid option, try again...")
             
 
-# command for streaming media using mpv
 def mpv_play():
+    '''command for streaming media using mpv'''
     global mpv_custom_flag, mpv_bin
 
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -153,8 +169,8 @@ def mpv_play():
         os.system(mpv_run)
         input("Press Enter to continue...")
 
-# media format selection    
 def format_sel():
+    '''media format selection'''
     global format_sel, formato, format_name, subs_check, metadata_check, metadata_flag
     
     print("Please select the media format:")
@@ -188,8 +204,8 @@ def format_sel():
         print("Invalid command, try again...")
     clrscreen()
 
-# folder path selection - simpler approach    
 def path_sel():
+    '''folder path selection - simpler approach'''
     global folder_check, folder_path, folder_path_flag, system
     
     path_confirm = str(input(f"do you want to use the default folder or set another?\nDefault: {folder_path}\n(d) for default, (y) for set a new one, (n) for none, save in the same path as executable\n: "))
@@ -216,16 +232,16 @@ def path_sel():
         input("Press Enter to continue...")
     clrscreen()
 
-# set browser for login cookies and acess to download restricted contend
 def browser_sel():
+    '''set browser for login cookies and acess to download restricted contend'''
     global browser_name, browser_cookie_check
     browser_name = str(input("Select Browser name...\nSupported browsers are: brave, chrome, chromium, edge,\nfirefox, opera, safari, vivaldi, whale.\nYou must be logged in on the targeted website.\n:"))
     browser_cookie_check = True
     clrscreen()
     
-# resets the configurations and flags
 def reset_sel():
-    print("1) browser cookies | 2) metadata | 3) subtitles\n4) mpv values")
+    '''resets the configurations and flags'''
+    print("1) browser cookies | 2) metadata | 3) subtitles\n4) mpv values | q) go back to the menu")
     reset_choice = str(input("Select which parameter to reset: "))
     if reset_choice == "1":
         browser_cookie_check = False
@@ -235,12 +251,14 @@ def reset_sel():
         subs_check = False
     elif reset_choice == "4":
         mpv_sel()
+    elif reset_choice == "q":
+        clrscreen()
     else:
         print("Invalid command.")
-    clrscreen()
 
-#saves the links into a csv file on the set directory
+
 def link_to_csv():
+    '''saves the links into a csv file on the set directory'''
     global videos
     try:
         table=open(f'{folder_path}ytlinks.csv','x',encoding="UTF-8")
@@ -266,12 +284,12 @@ def link_to_csv():
         table.write(f'{title};{channel};{vd_link}\n')
         print(f"{title} added to download history...")
 
-# help and informations about the program
 def helpinfo():
+    '''help and informations about the program'''
     clrscreen()
     print(cool_logo)
     print("Command-line utility written in Python to interact with yt-dlp.")
-    print("Check me on Github: https://github.com/m-xisto/yt-dlp-simpleCLI")
+    print("Check me on Github: https://github.com/mxisto/yt-dlp-simpleCLI")
     print("----------------------------")
     input("Press Enter to go back...")
     clrscreen()
