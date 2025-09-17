@@ -1,0 +1,17 @@
+# template for placing in /.local/share/applications/
+
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=yt-dlp
+Comment=yt-dlp
+
+# 
+Exec = yt-dlp
+# set a custom icon here
+Icon=/usr/share/icons/Papirus/16x16/apps/python.svg
+
+Terminal=true
+Categories=Accessories
+StartupNotify=false
+PrefersNonDefaultGPU=false

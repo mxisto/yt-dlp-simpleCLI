@@ -17,6 +17,7 @@ import platform
 import shlex
 import subprocess
 import os
+import time
 
 # VARIABLES, FLAGS and CHECKS
 # ______________
@@ -46,11 +47,18 @@ videos={}
 # check for OS and change the yt-dlp binary name and folder path accordingly, also the username
 system = platform.system()
 if system == "Linux":
-    ytdlp_bin = "yt-dlp"
+    if os.path.isfile("yt-dlp"):
+        print("yt-dlp binary in same directory as program")
+        ytdlp_bin = "./yt-dlp" #for using the executable from the same folder instead of the system path one
+    else:
+        ytdlp_bin = "yt-dlp"
     user_name = subprocess.run(['whoami'], capture_output=True, text=True).stdout.strip()
     folder_path = str(f"/home/{user_name}/Videos/")
     print ("System: Linux")
+
 elif system == "Windows":
+    if os.path.isfile("yt-dlp.exe"):
+        print("yt-dlp binary in same directory as program")
     ytdlp_bin = "yt-dlp.exe"
     user_name = os.environ['USERNAME']
     folder_path= str(f"C:\\Users\\{user_name}\\Videos\\")
@@ -67,7 +75,7 @@ __               __            ____
 /_/_____\__, /\__/      \__,_/_/ .___/ 
  /_____/____/      simple CLI /_/
  
- version 0.0.6   
+ version 0.0.7   
 """)
 
 print(cool_logo)
@@ -119,11 +127,7 @@ def clrscreen():
 
 def ytdlp_update():
     '''command to update the yt-dlp binary from inside the program'''
-    if system == "Linux":
-        os.system('yt-dlp -U')
-
-    elif system == "Windows":
-        os.system('yt-dlp.exe -U')
+    os.system(f'{ytdlp_bin} -U')
 
 def mpv_sel():
     '''selection of custom mpv frontend'''
@@ -183,6 +187,7 @@ def format_sel():
         sub_check = str(input("save subtitles? (y) or (n)?"))
         if sub_check == "y":
             subs_check = True
+            metadata_check = False
         elif sub_check == "n":
             subs_check = False
         else:
@@ -194,6 +199,7 @@ def format_sel():
         meta_check = str(input("save metadata? (y) or (n)?"))
         if meta_check == "y":
             metadata_check = True
+            subs_check = False
         elif meta_check == "n":
             metadata_check = False
         else:
@@ -239,19 +245,22 @@ def browser_sel():
     browser_cookie_check = True
     clrscreen()
     
-def reset_sel():
-    '''resets the configurations and flags'''
-    print("1) browser cookies | 2) metadata | 3) subtitles\n4) mpv values | q) go back to the menu")
-    reset_choice = str(input("Select which parameter to reset: "))
-    if reset_choice == "1":
+def reset_all():
+    '''resets all the configurations and flags'''
+    global browser_cookie_check, metadata_check, subs_check, folder_check, mpv_custom_flag, video_link, browser_name, format_name
+    choice = str(input("Do you really want to reset ALL set parameter for this session?\n (Y)es or (N)o?: "))
+    choice = choice.lower()
+    if choice == "y":
         browser_cookie_check = False
-    elif reset_choice == "2":
         metadata_check = False
-    elif reset_choice == "3":
         subs_check = False
-    elif reset_choice == "4":
-        mpv_sel()
-    elif reset_choice == "q":
+        folder_check = True
+        mpv_custom_flag = False
+
+        video_link = str("")
+        browser_name = str("")
+        format_name = str("none")
+    elif choice == "n":
         clrscreen()
     else:
         print("Invalid command.")
@@ -300,15 +309,17 @@ def helpinfo():
 while True:
     print("----------------------------")
     print(f"Format: {format_name}")
-    print(f"Mp3 Metadata: {metadata_check} | Video Subtitles: {subs_check}")
-    print(f"Browser Cookies: {browser_name} | Folder path: {folder_path}")
+    print(f"Mp3 Metadata: {metadata_check}") if metadata_check else None
+    print(f"Video Subtitles: {subs_check}") if subs_check else None
+    print(f"Browser Cookies: {browser_name}") if browser_name else None
+    print(f"Folder path: {folder_path}")
     
     print(r"""
 ----------------------------
     
 i) to insert URL    |   f) media format
 b) browser cookies  |   p) set folder path
-r) reset parameters |   c) clear screen
+r) reset            |   c) clear screen
 u) update yt-dlp    |   m) stream media (mpv)
 h) help             |   q) quit
 ____________________________
@@ -334,7 +345,7 @@ ____________________________
             path_sel()
 
         elif comando == "r":
-            reset_sel()
+            reset_all()
 
         elif comando == "c":
             clrscreen()
@@ -352,6 +363,7 @@ ____________________________
         
         elif comando == "q":
             print("Bye bye! (^.^)/")
+            time.sleep(1)
             break
         else:
             print("Not a recognized command, try again...")
