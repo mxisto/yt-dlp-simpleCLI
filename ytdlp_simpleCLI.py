@@ -330,10 +330,14 @@ ____________________________
     try:
         if comando == "i":
             clrscreen()
-            video_link=str(input("Insert URL: "))
-            link_to_csv()
-            set_combo()
-            input("Press Enter to continue...")
+            print("Insert the video URL | Enter nothing to cancel")
+            video_link=str(input(">> "))
+            if video_link == (''):
+                clrscreen()
+            else:
+                link_to_csv()
+                set_combo()
+                input("Press Enter to continue...")
 
         elif comando == "f":
             format_sel()
