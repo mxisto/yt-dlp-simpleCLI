@@ -35,7 +35,7 @@ format_name = str("none")
 
 metadata_flag = str(" --embed-metadata --embed-thumbnail")
 subs_flag = str(" --all-subs")
-cookies_flag = str(" --cookies from browser")
+cookies_flag = str(" --cookies-from-browser")
 folder_path_flag = str(" -P")
 
 ytdlp_bin = ""
@@ -239,7 +239,7 @@ def path_sel():
     clrscreen()
 
 def browser_sel():
-    '''set browser for login cookies and acess to download restricted contend'''
+    '''set browser for login cookies and acess to download restricted content'''
     global browser_name, browser_cookie_check
     browser_name = str(input("Select Browser name...\nSupported browsers are: brave, chrome, chromium, edge,\nfirefox, opera, safari, vivaldi, whale.\nYou must be logged in on the targeted website.\n:"))
     browser_cookie_check = True
@@ -361,7 +361,7 @@ ____________________________
             ytdlp_update()
             input("Press Enter to continue...")
             os.system('cls' if os.name == 'nt' else 'clear')
-			
+            
         elif comando == "h":
             helpinfo()
         
