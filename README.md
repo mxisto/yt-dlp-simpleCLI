@@ -1,15 +1,5 @@
 # yt-dlp simpleCLI
 
-```markdown
-__               __            ____    
-\ \       __  __/ /_      ____/ / /___ 
- \ \     / / / / __/_____/ __  / / __ \
- / /    / /_/ / /_/_____/ /_/ / / /_/ /
-/_/_____\__, /\__/      \__,_/_/ .___/ 
- /_____/____/     simple CLI  /_/
-                           
-```
-
 Command-line utility to interact with yt-dlp
 
 The goal is to do a even simpler approach to interact with the yt-dlp binary via terminal.
