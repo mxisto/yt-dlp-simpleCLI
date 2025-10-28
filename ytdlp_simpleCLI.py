@@ -97,7 +97,6 @@ def set_combo():
         download_combo+=subs_flag
             
     if browser_cookie_check == True:
-        cookies_flag+=str(" ")+browser_name
         download_combo+=cookies_flag
         
     if folder_check == True:
@@ -240,9 +239,10 @@ def path_sel():
 
 def browser_sel():
     '''set browser for login cookies and acess to download restricted content'''
-    global browser_name, browser_cookie_check
-    browser_name = str(input("Select Browser name...\nSupported browsers are: brave, chrome, chromium, edge,\nfirefox, opera, safari, vivaldi, whale.\nYou must be logged in on the targeted website.\n:"))
+    global browser_name, browser_cookie_check, cookies_flag
+    browser_name = str(input("Select Browser name...\nSupported browsers are: brave, chrome, chromium, edge,\nfirefox, opera, safari, vivaldi, whale.\nYou must be logged in on the targeted website.\n>> "))
     browser_cookie_check = True
+    cookies_flag+=str(" ")+browser_name
     clrscreen()
     
 def reset_all():
@@ -335,7 +335,11 @@ ____________________________
             if video_link == (''):
                 clrscreen()
             else:
-                link_to_csv()
+                print("\nDo you want to save this link to the database?")
+                link_confirm=str(input("(Y)es or (N)o?\n>> "))
+                link_confirm=link_confirm.lower()
+                if link_confirm=="y":
+                    link_to_csv()
                 set_combo()
                 input("Press Enter to continue...")
 
