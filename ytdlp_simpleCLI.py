@@ -88,7 +88,7 @@ print(f"Hello, {user_name}! What we are going to download today? :3")
 def set_combo():
     '''process for URL download, it combines the strings into a command to execute in the shell'''
     global download_combo, cookies_flag, folder_path
-    download_combo = ytdlp_bin + formato + (" ") + video_link + (" --restrict-filenames")
+    download_combo = ytdlp_bin + formato + (" ") + video_link #+ (" --restrict-filenames")
 
     if metadata_check == True:
         download_combo+=metadata_flag
