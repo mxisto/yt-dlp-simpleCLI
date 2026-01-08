@@ -28,6 +28,7 @@ metadata_check = False
 subs_check = False
 folder_check = True
 mpv_custom_flag = False
+custom_filename_check = False
 
 video_link = str("")
 browser_name = str("")
@@ -37,10 +38,13 @@ metadata_flag = str(" --embed-metadata --embed-thumbnail")
 subs_flag = str(" --all-subs")
 cookies_flag = str(" --cookies-from-browser")
 folder_path_flag = str(" -P")
+custom_filename_flag = str(" -o ")
 
 ytdlp_bin = ""
 mpv_bin="mpv"
 user_name= ""
+
+custom_filename = ""
 
 videos={}
 
@@ -87,7 +91,7 @@ print(f"Hello, {user_name}! What we are going to download today? :3")
 
 def set_combo():
     '''process for URL download, it combines the strings into a command to execute in the shell'''
-    global download_combo, cookies_flag, folder_path
+    global download_combo, cookies_flag, folder_path, custom_filename
     download_combo = ytdlp_bin + formato + (" ") + video_link #+ (" --restrict-filenames")
 
     if metadata_check == True:
@@ -98,6 +102,9 @@ def set_combo():
             
     if browser_cookie_check == True:
         download_combo+=cookies_flag
+        
+    if custom_filename_check == True:
+        download_combo+=custom_filename_flag+str(f' \\"{custom_filename}.%(ext)s\\" ')
         
     if folder_check == True:
         download_combo+=str(" -P ")+folder_path
@@ -270,6 +277,7 @@ def link_to_csv():
     '''saves the links into a csv file on the set directory'''
     global videos
     try:
+        print(f"Creating new csv file in {folder_path}...")
         table=open(f'{folder_path}ytlinks.csv','x',encoding="UTF-8")
     except FileExistsError:
         print(f"URL history already created at {folder_path} as 'ytlinks.csv'.")
@@ -324,17 +332,21 @@ u) update yt-dlp    |   m) stream media (mpv)
 h) help             |   q) quit
 ____________________________
 """)
-    
     comando=str(input("Select a option: "))
 
     try:
         if comando == "i":
             clrscreen()
-            print("Insert the video URL | Enter nothing to cancel")
+            print("Insert the video URL...\n| c + space before link to enter a custom filename\n| Enter nothing to cancel")
             video_link=str(input(">> "))
             if video_link == (''):
                 clrscreen()
             else:
+                if video_link[0] == 'c' or 'C':
+                    video_link = video_link[1:].strip(" ")
+                    custom_filename = str(input("Type the name for the file >> "))
+                    custom_filename_check = True
+                    
                 print("\nDo you want to save this link to the database?")
                 link_confirm=str(input("(Y)es or (N)o?\n>> "))
                 link_confirm=link_confirm.lower()
