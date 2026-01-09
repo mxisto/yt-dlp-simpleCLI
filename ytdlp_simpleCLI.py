@@ -79,7 +79,7 @@ __               __            ____
 /_/_____\__, /\__/      \__,_/_/ .___/ 
  /_____/____/      simple CLI /_/
  
- version 0.0.7   
+ version 0.0.8   
 """)
 
 print(cool_logo)
@@ -104,7 +104,11 @@ def set_combo():
         download_combo+=cookies_flag
         
     if custom_filename_check == True:
-        download_combo+=custom_filename_flag+str(f' \\"{custom_filename}.%(ext)s\\" ')
+        if system == "Linux":
+            download_combo+=custom_filename_flag+str(f' \\"{custom_filename}.%(ext)s\\" ')
+        elif system == "Windows":
+            download_combo+=custom_filename_flag+str(f' \"{custom_filename}.%(ext)s\" ')
+            # fix for the backslash escaping in Windows
         
     if folder_check == True:
         download_combo+=str(" -P ")+folder_path
