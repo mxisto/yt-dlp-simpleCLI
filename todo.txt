@@ -1,2 +1,2 @@
 [] option to save configurations in a conf file
-[] package FFMPEG, AtomicParsley and Mutagen for Windows
+[x] package FFMPEG, AtomicParsley and Mutagen for Windows
