@@ -1,9 +1,10 @@
-Dependencies (Windows)
-______________________
+# Dependencies (Windows)
+
+***
 
 This project uses the following open-source libraries. Each library is licensed under its own terms, which we have outlined below. By including these libraries, we ensure compliance with their respective licenses, and we ask that you review them carefully if you plan to redistribute or modify the project.
 
-1. FFMPEG
+## 1. FFMPEG
 
 License: GPLv2 or LGPLv2.1 (depending on how it's compiled)
 
@@ -12,10 +13,10 @@ Description: FFMPEG is a complete, cross-platform solution to record, convert, a
 License Details: This project includes FFMPEG, which is licensed under the GPLv2 (General Public License version 2). If you modify and redistribute this software, you must also distribute the source code or make it available, as required by the GPL. If you prefer, you can compile FFMPEG with the LGPLv2.1 (Lesser General Public License) to avoid disclosing your proprietary code, but modifications to FFMPEG itself must still be released under LGPL.
 
 More Information:
-https://www.ffmpeg.org/
-https://www.gyan.dev/ffmpeg/builds/
+- https://www.ffmpeg.org/
+- https://www.gyan.dev/ffmpeg/builds/
 
-2. AtomicParsley
+## 2. AtomicParsley
 
 License: MIT License
 
@@ -24,7 +25,7 @@ Description: AtomicParsley is a command-line program for reading and editing met
 License Details: AtomicParsley is licensed under the MIT License, which is a permissive open-source license. You are free to use, modify, and distribute the software, even in proprietary projects, as long as the original copyright notice and the MIT license are included in any redistribution.
 
 More Information:
-https://github.com/wez/atomicparsley
+- https://github.com/wez/atomicparsley
 
 3. Mutagen
 
@@ -35,7 +36,9 @@ Description: Mutagen is a Python library for handling audio metadata. This proje
 License Details: Mutagen is licensed under the LGPLv2.1 (Lesser General Public License version 2.1). You are permitted to use Mutagen in proprietary projects, but if you modify the library itself, those modifications must be released under the same LGPL license. If you distribute this project, you must also provide access to the source code of Mutagen, or at least a written offer to provide it.
 
 More Information:
-https://github.com/quodlibet/mutagen
+- https://github.com/quodlibet/mutagen
+
+***
 
 Attributions & Compliance
 
