@@ -27,7 +27,7 @@ License Details: AtomicParsley is licensed under the MIT License, which is a per
 More Information:
 - https://github.com/wez/atomicparsley
 
-3. Mutagen
+## 3. Mutagen
 
 License: LGPLv2.1
 
