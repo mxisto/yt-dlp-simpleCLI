@@ -121,11 +121,11 @@ def set_combo():
     print(f"Running as: {a}")
 
     # note: the subprocess method should be better here, however it creates some problems with yt-dlp due to the
-    # way it runs, so I replaced it with the following command, that, although it is said to be less secure due to
-    # potential shell injection vulnerabilities, it is the only way to make yt-dlp work without spilling errors
+    # way it runs, so I replaced it with the following command using shlex, that, although it is said to be 
+    # less secure due to potential shell injection vulnerabilities, it is the only way to make 
+    # yt-dlp work without spilling errors
     # or corrupting the files in the download process
     os.system(a)
-
 
 def clrscreen():
     '''function to clear the screen, it is used in a lot of places in the code'''
@@ -342,7 +342,7 @@ ____________________________
             if video_link == (''):
                 clrscreen()
             else:
-                if video_link[0] == 'c' or 'C':
+                if video_link[0] == str('c') or video_link[0] == str('C'):
                     video_link = video_link[1:].strip(" ")
                     custom_filename = str(input("Type the name for the file >> "))
                     custom_filename_check = True
