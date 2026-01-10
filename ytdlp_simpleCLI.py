@@ -258,7 +258,7 @@ def browser_sel():
     
 def reset_all():
     '''resets all the configurations and flags'''
-    global browser_cookie_check, metadata_check, subs_check, folder_check, mpv_custom_flag, video_link, browser_name, format_name
+    global browser_cookie_check, metadata_check, subs_check, folder_check, mpv_custom_flag, video_link, browser_name, format_name, custom_filename, custom_filename_check
     choice = str(input("Do you really want to reset ALL set parameter for this session?\n (Y)es or (N)o?: "))
     choice = choice.lower()
     if choice == "y":
@@ -267,10 +267,12 @@ def reset_all():
         subs_check = False
         folder_check = True
         mpv_custom_flag = False
+        custom_filename_check = False
 
         video_link = str("")
         browser_name = str("")
         format_name = str("none")
+        custom_filename = str("")
     elif choice == "n":
         clrscreen()
     else:
@@ -357,6 +359,9 @@ ____________________________
                 if link_confirm=="y":
                     link_to_csv()
                 set_combo()
+                # resets the custom filename for the next iteration
+                custom_filename = str("")
+                custom_filename_check = False
                 input("Press Enter to continue...")
 
         elif comando == "f":
