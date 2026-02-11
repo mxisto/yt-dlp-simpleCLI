@@ -92,6 +92,7 @@ print(f"Hello, {user_name}! What we are going to download today? :3")
 def set_combo():
     '''process for URL download, it combines the strings into a command to execute in the shell'''
     global download_combo, cookies_flag, folder_path, custom_filename
+    
     download_combo = ytdlp_bin + formato + (" ") + video_link #+ (" --restrict-filenames")
 
     if metadata_check == True:
@@ -342,27 +343,31 @@ ____________________________
 
     try:
         if comando == "i":
-            clrscreen()
-            print("Insert the video URL...\n| c + space before link to enter a custom filename\n| Enter nothing to cancel")
-            video_link=str(input(">> "))
-            if video_link == (''):
-                clrscreen()
+            if format_name == 'none':
+                print('\nPlease select a file format first...')
             else:
-                if video_link[0] == str('c') or video_link[0] == str('C'):
-                    video_link = video_link[1:].strip(" ")
-                    custom_filename = str(input("Type the name for the file >> "))
-                    custom_filename_check = True
-                    
-                print("\nDo you want to save this link to the database?")
-                link_confirm=str(input("(Y)es or (N)o?\n>> "))
-                link_confirm=link_confirm.lower()
-                if link_confirm=="y":
-                    link_to_csv()
-                set_combo()
-                # resets the custom filename for the next iteration
-                custom_filename = str("")
-                custom_filename_check = False
-                input("Press Enter to continue...")
+            
+                clrscreen()
+                print("Insert the video URL...\n| c + space before link to enter a custom filename\n| Enter nothing to cancel")
+                video_link=str(input(">> "))
+                if video_link == (''):
+                    clrscreen()
+                else:
+                    if video_link[0] == str('c') or video_link[0] == str('C'):
+                        video_link = video_link[1:].strip(" ")
+                        custom_filename = str(input("Type the name for the file >> "))
+                        custom_filename_check = True
+                        
+                    print("\nDo you want to save this link to the database?")
+                    link_confirm=str(input("(Y)es or (N)o?\n>> "))
+                    link_confirm=link_confirm.lower()
+                    if link_confirm=="y":
+                        link_to_csv()
+                    set_combo()
+                    # resets the custom filename for the next iteration
+                    custom_filename = str("")
+                    custom_filename_check = False
+                    input("Press Enter to continue...")
 
         elif comando == "f":
             format_sel()
@@ -395,7 +400,7 @@ ____________________________
             time.sleep(1)
             break
         else:
-            print("Not a recognized command, try again...")
+            print("\nNot a recognized command, try again...")
 
     except NameError:
         print("Did you forgot to add something? Check your options again!")
