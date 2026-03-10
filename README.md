@@ -22,7 +22,7 @@ This program is originally set to work with both the standalone `yt-dlp` binary 
 - `subprocess`
 - `time`
 
-## Python
+## Python version
 
 - `Python 3.8+`
 
@@ -38,6 +38,8 @@ You can simply run the code via the python interpreter, because building a execu
 Use the `linux_install.sh` script, this creates a copy of the included .desktop file so that the program can be launched from a application menu. It uses the folder path from where you unzip/clone the files as reference.
 
 If you move the folder to somewhere else, run `linux_uninstall.sh` to remove the old file before running the install script again.
+
+> If you get a permission error run the command as **sudo**, it only copies a .desktop file and a symlink to .local/share/applications in order to insert the program in your applications list.
 
 ### Windows
 *WIP*
