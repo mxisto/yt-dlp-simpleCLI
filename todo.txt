@@ -1,2 +1,4 @@
 [] option to save configurations in a conf file
 [x] package FFMPEG, AtomicParsley and Mutagen for Windows
+[] convert the .csv process into a SQL database
+[]separate each function into a module

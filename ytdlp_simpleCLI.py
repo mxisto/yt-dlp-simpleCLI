@@ -13,11 +13,11 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 
-import platform
-import shlex
-import subprocess
-import os
-import time
+# standard libraries import
+import platform, shlex, subprocess, os, time
+
+# custom libraries import
+import utils.helpinfo, utils.mpv
 
 # VARIABLES, FLAGS and CHECKS
 # ______________
@@ -69,21 +69,6 @@ elif system == "Windows":
     print ("System: Windows")
 
 download_combo = ""
-
-# cool logo :)
-cool_logo=str(r"""
-__               __            ____    
-\ \       __  __/ /_      ____/ / /___ 
- \ \     / / / / __/_____/ __  / / __ \
- / /    / /_/ / /_/_____/ /_/ / / /_/ /
-/_/_____\__, /\__/      \__,_/_/ .___/ 
- /_____/____/      simple CLI /_/
- 
- version 0.0.8   
-""")
-
-print(cool_logo)
-print(f"Hello, {user_name}! What we are going to download today? :3")
 
 #______________________________________________________________________________
 
@@ -308,19 +293,12 @@ def link_to_csv():
         table.write(f'{title};{channel};{vd_link}\n')
         print(f"{title} added to download history...")
 
-def helpinfo():
-    '''help and informations about the program'''
-    clrscreen()
-    print(cool_logo)
-    print("Command-line utility written in Python to interact with yt-dlp.")
-    print("Check me on Github: https://github.com/mxisto/yt-dlp-simpleCLI")
-    print("----------------------------")
-    input("Press Enter to go back...")
-    clrscreen()
-
 #______________________________________________________________________________
 
 # MAIN LOOP
+utils.helpinfo.cool_logo()
+print(f"Hello, {user_name}! What we are going to download today? :3")
+
 while True:
     print("----------------------------")
     print(f"Format: {format_name}")
@@ -393,7 +371,9 @@ ____________________________
             os.system('cls' if os.name == 'nt' else 'clear')
             
         elif comando == "h":
-            helpinfo()
+            clrscreen()
+            utils.helpinfo.show()
+            clrscreen()
         
         elif comando == "q":
             print("Bye bye! (^.^)/")
