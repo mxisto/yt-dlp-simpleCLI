@@ -5,3 +5,4 @@ yt-dlp.exe
 yt-dlp
 from
 README.md~
+/utils/__pycache__

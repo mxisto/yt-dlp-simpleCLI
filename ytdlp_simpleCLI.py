@@ -17,7 +17,7 @@
 import platform, shlex, subprocess, os, time
 
 # custom libraries import
-import utils.helpinfo, utils.mpv
+import utils.helpinfo, utils.mpv, utils.browser
 
 # VARIABLES, FLAGS and CHECKS
 # ______________
@@ -36,7 +36,6 @@ format_name = str("none")
 
 metadata_flag = str(" --embed-metadata --embed-thumbnail")
 subs_flag = str(" --all-subs")
-cookies_flag = str(" --cookies-from-browser")
 folder_path_flag = str(" -P")
 custom_filename_flag = str(" -o ")
 
@@ -233,14 +232,6 @@ def path_sel():
         print("Not a recognized command.")
         input("Press Enter to continue...")
     clrscreen()
-
-def browser_sel():
-    '''set browser for login cookies and acess to download restricted content'''
-    global browser_name, browser_cookie_check, cookies_flag
-    browser_name = str(input("Select Browser name...\nSupported browsers are: brave, chrome, chromium, edge,\nfirefox, opera, safari, vivaldi, whale.\nYou must be logged in on the targeted website.\n>> "))
-    browser_cookie_check = True
-    cookies_flag+=str(" ")+browser_name
-    clrscreen()
     
 def reset_all():
     '''resets all the configurations and flags'''
@@ -351,7 +342,11 @@ ____________________________
             format_sel()
 
         elif comando == "b":
-            browser_sel()
+            #browser_sel()
+            browser_name = str(utils.browser.name())
+            cookies_flag = str(utils.browser.flag(browser_name))
+            browser_cookie_check = True
+            clrscreen()
 
         elif comando == "p":
             path_sel()
