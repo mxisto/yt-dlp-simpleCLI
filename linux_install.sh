@@ -6,6 +6,15 @@ location=$(pwd)
 username=$(whoami)
 desktop_file="/home/$username/.local/share/applications/ytdlp-menu.desktop"
 
+# first check if the applications directory in .local/share exists
+localshare="/home/$username/.local/share/applications/"
+if [ -d "$localshare" ]; then
+    echo "applications directory already created..."
+else
+    echo "Creating applications directory in .local/share/ ..."
+    mkdir $localshare
+fi
+
 cp ytdlp-menu.desktop $desktop_file
 chmod u+x $desktop_file
 
@@ -17,4 +26,8 @@ else
     echo "Path already exists on $desktop_file."
 fi
 
-echo "A desktop file was created in .local/share/applications, launch as ytdlp Menu!"
+if [ -f "$desktop_file" ]; then
+	echo ".destop file already at $localshare"
+else
+	echo "A desktop file was created in .local/share/applications, launch as ytdlp Menu!"
+fi
