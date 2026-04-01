@@ -191,7 +191,7 @@ def format_sel():
     elif formato_sel == "2":
         print("Format set to Mp3")
         formato = str(" -t mp3")  # preset alias from yt-dlp
-        meta_check = str(input("save metadata? (y) or (n)?"))
+        meta_check = str(input("save metadata? (y) or (n)?: "))
         if meta_check == "y":
             metadata_check = True
             subs_check = False
@@ -215,6 +215,10 @@ def path_sel():
             print(f"Tip: you can use ~/[...] in place of /home/{user_name}/[...]")
             
         p=str(input("Please set the new folder path: "))
+        if "~/" in p:
+            p=p.replace("~/",f"/home/{user_name}/")
+        if not p.endswith("/"):
+            p+="/"
         folder_path=p
         folder_check = True
         
@@ -260,8 +264,11 @@ def link_to_csv():
     '''saves the links into a csv file on the set directory'''
     global videos
     try:
-        print(f"Creating new csv file in {folder_path}...")
+        print(f"Trying to create new csv file in {folder_path}...")
         table=open(f'{folder_path}ytlinks.csv','x',encoding="UTF-8")
+    except FileNotFoundError:
+        print(f"Writing new csv file in {folder_path}...")
+        table=open(f'{folder_path}ytlinks.csv','w',encoding="UTF-8")
     except FileExistsError:
         print(f"URL history already created at {folder_path} as 'ytlinks.csv'.")
         table=open(f'{folder_path}ytlinks.csv','a',encoding="UTF-8")
@@ -283,6 +290,7 @@ def link_to_csv():
     for title, data in videos.items():
         table.write(f'{title};{channel};{vd_link}\n')
         print(f"{title} added to download history...")
+    table.close()
 
 #______________________________________________________________________________
 

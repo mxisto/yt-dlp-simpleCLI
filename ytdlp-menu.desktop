@@ -3,7 +3,6 @@ Type=Application
 Version=1.0
 Name=yt-dlp Menu
 Comment=Menu for yt-dlp
-Icon=/usr/share/icons/Papirus/16x16/apps/youtube-dl.svg
 Terminal=true
 Categories=Accessories
 StartupNotify=false

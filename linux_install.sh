@@ -5,6 +5,7 @@
 location=$(pwd)
 username=$(whoami)
 desktop_file="/home/$username/.local/share/applications/ytdlp-menu.desktop"
+image_file="/home/$username/.local/share/applications/yt-dlp.png"
 
 # first check if the applications directory in .local/share exists
 localshare="/home/$username/.local/share/applications/"
@@ -16,6 +17,8 @@ else
 fi
 
 cp ytdlp-menu.desktop $desktop_file
+cp yt-dlp.png $image_file
+echo "Icon=$image_file" >> $desktop_file
 chmod u+x $desktop_file
 
 # checks if "Path = " already exists in the .desktop file

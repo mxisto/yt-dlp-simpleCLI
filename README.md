@@ -39,10 +39,8 @@ Use the `linux_install.sh` script, this creates a copy of the included .desktop 
 
 If you move the folder to somewhere else, run `linux_uninstall.sh` to remove the old file before running the install script again.
 
-> If you get a permission error run the command as **sudo**, it only copies a .desktop file and a symlink to .local/share/applications in order to insert the program in your applications list.
-
 ### Windows
 *WIP*
 
 ***
-At the moment, the focus is working in Linux (more specifically, Arch, Ubuntu and Debian based distros), tests on Windows have been few at least for the time being.
+At the moment, the focus is working in Linux, tests on Windows have been few at least for the time being.
