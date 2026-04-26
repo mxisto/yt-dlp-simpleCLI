@@ -17,7 +17,7 @@ else
 fi
 
 cp ytdlp-menu.desktop $desktop_file
-cp yt-dl.png $image_file
+cp "$location/resources/yt-dl.png" $image_file
 echo "Icon=$image_file" >> $desktop_file
 chmod u+x $desktop_file
 
@@ -30,7 +30,7 @@ else
 fi
 
 if [ -f "$desktop_file" ]; then
-	echo ".destop file already at $localshare"
+    echo ".desktop file already at $localshare"
 else
-	echo "A desktop file was created in .local/share/applications, launch as ytdlp Menu!"
+    echo "A desktop file was created in .local/share/applications, launch as ytdlp Menu!"
 fi

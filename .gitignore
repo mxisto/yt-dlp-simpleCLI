@@ -6,3 +6,4 @@ yt-dlp
 from
 README.md~
 /utils/__pycache__
+history.db

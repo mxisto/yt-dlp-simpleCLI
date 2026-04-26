@@ -12,12 +12,12 @@
 #  along with this program; if not, write to the Free Software
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
-
+#______________________________________________________________________________
 # standard libraries import
 import platform, shlex, subprocess, os, time
 
 # custom libraries import
-import utils.helpinfo, utils.mpv, utils.browser
+import utils.helpinfo, utils.mpv, utils.browser, utils.database
 
 # VARIABLES, FLAGS and CHECKS
 # ______________
@@ -179,7 +179,7 @@ def format_sel():
         print("Format set to Mp4")
         formato = str(" -t mp4") # preset alias from yt-dlp
         format_name = str("Mp4")
-        sub_check = str(input("save subtitles? (y) or (n)?"))
+        sub_check = str(input("save subtitles? (y) or (n)?: "))
         if sub_check == "y":
             subs_check = True
             metadata_check = False
@@ -259,39 +259,6 @@ def reset_all():
     else:
         print("Invalid command.")
 
-
-def link_to_csv():
-    '''saves the links into a csv file on the set directory'''
-    global videos
-    try:
-        print(f"Trying to create new csv file in {folder_path}...")
-        table=open(f'{folder_path}ytlinks.csv','x',encoding="UTF-8")
-    except FileNotFoundError:
-        print(f"Writing new csv file in {folder_path}...")
-        table=open(f'{folder_path}ytlinks.csv','w',encoding="UTF-8")
-    except FileExistsError:
-        print(f"URL history already created at {folder_path} as 'ytlinks.csv'.")
-        table=open(f'{folder_path}ytlinks.csv','a',encoding="UTF-8")
-
-    print("Getting URL info, please wait...")
-
-    get_title=str(f"{ytdlp_bin} --print '%(title)s' {video_link}")
-    get_title=subprocess.run(get_title,shell=True, capture_output=True, text=True)
-    title=get_title.stdout.strip()
-
-    get_channel=str(f"{ytdlp_bin} --print '%(channel)s' {video_link}")
-    get_channel=subprocess.run(get_channel,shell=True, capture_output=True, text=True)
-    channel=get_channel.stdout.strip()
-
-    vd_link=video_link.strip('https://')
-
-    videos[title]={'channel':channel,'link':vd_link}
-
-    for title, data in videos.items():
-        table.write(f'{title};{channel};{vd_link}\n')
-        print(f"{title} added to download history...")
-    table.close()
-
 #______________________________________________________________________________
 
 # MAIN LOOP
@@ -325,7 +292,7 @@ ____________________________
             else:
             
                 clrscreen()
-                print("Insert the video URL...\n| c + space before link to enter a custom filename\n| Enter nothing to cancel")
+                print("Insert the video URL...\n| c + space before link to enter a custom filename\n| d + space to add the link to the local database\n| Enter nothing to cancel")
                 video_link=str(input(">> "))
                 if video_link == (''):
                     clrscreen()
@@ -334,12 +301,12 @@ ____________________________
                         video_link = video_link[1:].strip(" ")
                         custom_filename = str(input("Type the name for the file >> "))
                         custom_filename_check = True
-                        
-                    print("\nDo you want to save this link to the database?")
-                    link_confirm=str(input("(Y)es or (N)o?\n>> "))
-                    link_confirm=link_confirm.lower()
-                    if link_confirm=="y":
-                        link_to_csv()
+                    
+                    if video_link[0] == str('d') or video_link[0] == str('D'):
+                        video_link = video_link[1:].strip(" ")
+                        utils.database.add(video_link, ytdlp_bin)
+                    
+                    print(video_link)
                     set_combo()
                     # resets the custom filename for the next iteration
                     custom_filename = str("")
@@ -350,7 +317,6 @@ ____________________________
             format_sel()
 
         elif comando == "b":
-            #browser_sel()
             browser_name = str(utils.browser.name())
             cookies_flag = str(utils.browser.flag(browser_name))
             browser_cookie_check = True
@@ -385,8 +351,8 @@ ____________________________
         else:
             print("\nNot a recognized command, try again...")
 
-    except NameError:
-        print("Did you forgot to add something? Check your options again!")
+    except NameError as nme:
+        print("\nError -->", nme)
     
     except ValueError:
         print("Invalid option, try again...")
