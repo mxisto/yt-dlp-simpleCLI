@@ -17,7 +17,7 @@
 import platform, shlex, subprocess, os, time
 
 # custom libraries import
-import utils.helpinfo, utils.mpv, utils.browser, utils.database
+import utils.helpinfo, utils.browser, utils.database
 
 # VARIABLES, FLAGS and CHECKS
 # ______________
@@ -27,7 +27,6 @@ browser_cookie_check = False
 metadata_check = False
 subs_check = False
 folder_check = True
-mpv_custom_flag = False
 custom_filename_check = False
 
 video_link = str("")
@@ -40,7 +39,6 @@ folder_path_flag = str(" -P")
 custom_filename_flag = str(" -o ")
 
 ytdlp_bin = ""
-mpv_bin="mpv"
 user_name= ""
 
 custom_filename = ""
@@ -124,50 +122,6 @@ def ytdlp_update():
     '''command to update the yt-dlp binary from inside the program'''
     os.system(f'{ytdlp_bin} -U')
 
-def mpv_sel():
-    '''selection of custom mpv frontend'''
-    global mpv_custom_flag, mpv_bin
-        
-    print("Are you using a mpv frontend? MPV is set as default.\nDo you want to set another one? (ex. Celluloid, Haruna, SMPlayer, etc...)")
-    a=input("Yes (y) - Use custom | No - Use default MPV (n): ")
-
-    try:
-        if a == "y":
-            mpv_bin=str(input("Type the name: "))
-            mpv_bin=mpv_bin.lower()
-            mpv_custom_flag = True
-
-        elif a == "n":
-            if system == "Linux":
-                mpv_bin = "mpv"
-            elif system == "Windows":
-                mpv_bin = "mpv.exe"
-                
-            mpv_custom_flag = False
-        mpv_play()
-    except NameError:
-        print("Invalid name. Check your options again!")
-    except ValueError:
-        print("Invalid option, try again...")
-            
-
-def mpv_play():
-    '''command for streaming media using mpv'''
-    global mpv_custom_flag, mpv_bin
-
-    os.system('cls' if os.name == 'nt' else 'clear')
-    print(f"Stream online media via {mpv_bin}\ntype m) to set a custom Mplayer | q) to go back to the menu")
-    video_link=str(input("Insert URL: "))
-    if video_link=="m":
-        mpv_sel()
-    elif video_link=="q":
-        clrscreen()
-    else:
-        mpv_run=str(f"{mpv_bin} {video_link}")
-        print(mpv_run)
-        os.system(mpv_run)
-        input("Press Enter to continue...")
-
 def format_sel():
     '''media format selection'''
     global format_sel, formato, format_name, subs_check, metadata_check, metadata_flag
@@ -239,7 +193,7 @@ def path_sel():
     
 def reset_all():
     '''resets all the configurations and flags'''
-    global browser_cookie_check, metadata_check, subs_check, folder_check, mpv_custom_flag, video_link, browser_name, format_name, custom_filename, custom_filename_check
+    global browser_cookie_check, metadata_check, subs_check, folder_check, video_link, browser_name, format_name, custom_filename, custom_filename_check
     choice = str(input("Do you really want to reset ALL set parameter for this session?\n (Y)es or (N)o?: "))
     choice = choice.lower()
     if choice == "y":
@@ -247,7 +201,6 @@ def reset_all():
         metadata_check = False
         subs_check = False
         folder_check = True
-        mpv_custom_flag = False
         custom_filename_check = False
 
         video_link = str("")
@@ -279,7 +232,7 @@ while True:
 i) to insert URL    |   f) media format
 b) browser cookies  |   p) set folder path
 r) reset            |   c) clear screen
-u) update yt-dlp    |   m) stream media (mpv)
+u) update yt-dlp    |   
 h) help             |   q) quit
 ____________________________
 """)
@@ -330,9 +283,6 @@ ____________________________
 
         elif comando == "c":
             clrscreen()
-
-        elif comando == "m":
-            mpv_play()
             
         elif comando == "u":
             ytdlp_update()
