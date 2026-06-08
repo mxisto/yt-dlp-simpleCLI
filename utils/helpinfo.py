@@ -8,7 +8,7 @@ def cool_logo():
    /_/_____\__, /\__/      \__,_/_/ .___/ 
     /_____/____/      simple CLI /_/
     
-    version 0.0.10   
+    version 0.0.11  
     """))
 
 def show():
@@ -16,5 +16,5 @@ def show():
     cool_logo()
     print("Command-line utility written in Python to interact with yt-dlp.")
     print("Check me on Github: https://github.com/mxisto/yt-dlp-simpleCLI")
-    print("----------------------------")
+    print("-"*50)
     input("Press Enter to go back...")

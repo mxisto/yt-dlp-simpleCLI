@@ -215,27 +215,25 @@ def reset_all():
 #______________________________________________________________________________
 
 # MAIN LOOP
-utils.helpinfo.cool_logo()
-print(f"Hello, {user_name}! What we are going to download today? :3")
 
+print(f"Hello, {user_name}! What we are going to download today? OwO")
 while True:
-    print("----------------------------")
+    utils.helpinfo.cool_logo()
+    print("-"*50)
     print(f"Format: {format_name}")
     print(f"Mp3 Metadata: {metadata_check}") if metadata_check else None
     print(f"Video Subtitles: {subs_check}") if subs_check else None
     print(f"Browser Cookies: {browser_name}") if browser_name else None
     print(f"Folder path: {folder_path}")
-    
+    print("-"*50)
     print(r"""
-----------------------------
-    
 i) to insert URL    |   f) media format
 b) browser cookies  |   p) set folder path
 r) reset            |   c) clear screen
 u) update yt-dlp    |   
 h) help             |   q) quit
-____________________________
 """)
+    print("-"*50)
     comando=str(input("Select a option: "))
 
     try:
