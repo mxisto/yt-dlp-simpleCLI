@@ -15,9 +15,8 @@
 #______________________________________________________________________________
 # standard libraries import
 import platform, shlex, subprocess, os, time
-
 # custom libraries import
-import utils.helpinfo, utils.browser, utils.database
+import utils.helpinfo, utils.browser, utils.database, utils.history
 
 # VARIABLES, FLAGS and CHECKS
 # ______________
@@ -126,8 +125,7 @@ def format_sel():
     '''media format selection'''
     global format_sel, formato, format_name, subs_check, metadata_check, metadata_flag
     
-    print("Please select the media format:")
-    print("1) mp4 | 2) mp3")
+    print("Please select the media format:\n1) mp4 | 2) mp3")
     formato_sel = str(input(": "))
     if formato_sel == "1":
         print("Format set to Mp4")
@@ -194,7 +192,7 @@ def path_sel():
 def reset_all():
     '''resets all the configurations and flags'''
     global browser_cookie_check, metadata_check, subs_check, folder_check, video_link, browser_name, format_name, custom_filename, custom_filename_check
-    choice = str(input("Do you really want to reset ALL set parameter for this session?\n (Y)es or (N)o?: "))
+    choice = str(input("Do you really want to reset ALL set parameters for this session?\n (Y)es or (N)o?: "))
     choice = choice.lower()
     if choice == "y":
         browser_cookie_check = False
@@ -230,8 +228,8 @@ while True:
 i) to insert URL    |   f) media format
 b) browser cookies  |   p) set folder path
 r) reset            |   c) clear screen
-u) update yt-dlp    |   
-h) help             |   q) quit
+u) update yt-dlp    |   h) history
+?) help             |   q) quit
 """)
     print("-"*50)
     comando=str(input("Select a option: "))
@@ -287,10 +285,14 @@ h) help             |   q) quit
             input("Press Enter to continue...")
             os.system('cls' if os.name == 'nt' else 'clear')
             
-        elif comando == "h":
+        elif comando == "?":
             clrscreen()
             utils.helpinfo.show()
             clrscreen()
+            
+        elif comando == "h":
+            clrscreen()
+            utils.history.main()
         
         elif comando == "q":
             print("Bye bye! (^.^)/")

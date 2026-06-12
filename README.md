@@ -26,9 +26,9 @@ This program is originally set to work with both the standalone `yt-dlp` binary 
 
 - `Python 3.8+`
 
-## Packages needed in PATH
+## Packages needed
 
-- mpv (or any other MPlayer fork)
+- `xclip` or `xcel`(Linux) for sending saved urls to your clipboard
 
 ## Building and Running
 You can simply run the code via the python interpreter, because building a executable via `pyinstaller` may lead to some permission errors when downloading in some situations, since it runs shell commands in the end of the day.
