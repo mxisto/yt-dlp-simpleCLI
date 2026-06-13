@@ -29,18 +29,24 @@ def main():
 def show_search(srch, entries):
     global cursor, conector
     cont=0
+    found_entries=[]
     print('\n')
     for i in entries:
         #sets the string to lowercase in order to search it
         n = str(i[1]).lower()
         if srch in n:
             nm = i[1]
-            if len(nm) > 25:
-                nm = str(nm[0:25]+"...")
+            lnk = str(i[2]) #removes 'https://'
+            if 'https' in lnk:
+                lnk = lnk[8:-1]
+            
+            if len(nm) > 30:
+                nm = str(nm[0:30]+"...")
             else:
-                nm = str(nm+" "*(28-len(nm)))
-            print(cont, "-", nm," | ",i[2])
+                nm = str(nm+" "*(33-len(nm)))
+            print(cont, "-", nm," | ",lnk)
             cont+=1
+            found_entries.append(i)
     if cont == 0:
         print("Nothing here...\n")
         action = str(input("\n(s)earch again | (q)uit\n-> ")).lower()
@@ -53,7 +59,10 @@ def show_search(srch, entries):
     else:
         action = str(input("\n(g)et by index | (s)earch again | (q)uit\n-> ")).lower()
         if action == "g":
-            return_url(entries)
+            if len(found_entries) > 0:
+                return_url(found_entries)
+            else:
+                return_url(entries)
         elif action == "s":
             srch = str(input("\nSearch for: "))
             show_search(srch, entries)
@@ -97,11 +106,15 @@ def in_table(option):
         for i in entries:
             #cuts the title to a smaller string if needed
             nm = i[1]
-            if len(nm) > 25:
-                nm = str(nm[0:25]+"...")
+            lnk = str(i[2]) #removes 'https://'
+            if 'https' in lnk:
+                lnk = lnk[8:-1]
+                
+            if len(nm) > 30:
+                nm = str(nm[0:30]+"...")
             else:
-                nm = str(nm+" "*(28-len(nm)))
-            print(cont, "-", nm," | ",i[2])
+                nm = str(nm+" "*(33-len(nm)))
+            print(cont, "-", nm," | ",lnk)
             cont+=1
         if cont == 0:
             print("\nNothing here...")
