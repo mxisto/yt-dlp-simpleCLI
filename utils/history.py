@@ -23,8 +23,8 @@ def main():
     try:
         option = str(tables[sel])
         in_table(option)
-    except ValueError:
-        print("oops")
+    except IndexError:
+        print("Error - Value out of index...")
 
 def show_search(srch, entries):
     global cursor, conector
