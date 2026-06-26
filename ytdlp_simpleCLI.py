@@ -16,7 +16,7 @@
 # standard libraries import
 import platform, shlex, subprocess, os, time
 # custom libraries import
-import utils.helpinfo, utils.browser, utils.database, utils.history
+import utils.helpinfo, utils.browser, utils.database, utils.history, utils.thumbnail
 
 # VARIABLES, FLAGS and CHECKS
 # ______________
@@ -229,6 +229,7 @@ i) to insert URL    |   f) media format
 b) browser cookies  |   p) set folder path
 r) reset            |   c) clear screen
 u) update yt-dlp    |   h) history
+t) get thumbnail    |   
 ?) help             |   q) quit
 """)
     print("-"*50)
@@ -293,6 +294,13 @@ u) update yt-dlp    |   h) history
         elif comando == "h":
             clrscreen()
             utils.history.main()
+            
+        elif comando == "t":
+            video_link = str(input("Select the video to get the thumbnail from:\n| d + space to add the link to the local database\n--> "))
+            if video_link[0] == str('d') or video_link[0] == str('D'):
+                        video_link = video_link[1:].strip(" ")
+                        utils.database.add(video_link, ytdlp_bin)
+            utils.thumbnail.main(video_link,ytdlp_bin)
         
         elif comando == "q":
             print("Bye bye! (^.^)/")
