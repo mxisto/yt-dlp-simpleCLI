@@ -20,6 +20,8 @@ import utils.helpinfo, utils.browser, utils.database, utils.history, utils.thumb
 
 # VARIABLES, FLAGS and CHECKS
 # ______________
+print (os.get_terminal_size())
+
 os.environ['TERM'] = 'xterm'
 
 browser_cookie_check = False
@@ -296,11 +298,14 @@ t) get thumbnail    |
             utils.history.main()
             
         elif comando == "t":
-            video_link = str(input("Select the video to get the thumbnail from:\n| d + space to add the link to the local database\n--> "))
-            if video_link[0] == str('d') or video_link[0] == str('D'):
+            video_link = str(input("Select the video to get the thumbnail from:\n| d + space to add the link to the local database\n| Enter nothing to cancel\n--> "))
+            if video_link == (''):
+                    clrscreen()
+            elif video_link[0] == str('d') or video_link[0] == str('D'):
                         video_link = video_link[1:].strip(" ")
                         utils.database.add(video_link, ytdlp_bin)
-            utils.thumbnail.main(video_link,ytdlp_bin)
+            else:
+                utils.thumbnail.main(video_link,ytdlp_bin)
         
         elif comando == "q":
             print("Bye bye! (^.^)/")

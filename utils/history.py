@@ -2,7 +2,11 @@
 This script gets the information from history.db in the main folder
 and fetches the selected url for download from the chosen table.
 '''
-import sqlite3, subprocess, platform, shutil, sys
+import sqlite3, subprocess, platform, shutil, sys, re
+
+# below is a fix for the lenght of japanese and chinese characthers (uses `re`)
+cjk_pattern = re.compile(r'[\u3040-\u30FF\u3400-\u4DBF\u4E00-\u9FFF]')
+
 def main():
     global cursor, conector
     x=0
@@ -27,12 +31,14 @@ def main():
         print("Error - Value out of index...")
 
 def show_search(srch, entries):
+    '''shows the search result'''
     global cursor, conector
     cont=0
     found_entries=[]
     print('\n')
     for i in entries:
         #sets the string to lowercase in order to search it
+        # in this case, cjk characthers can be search normally
         n = str(i[1]).lower()
         if srch in n:
             nm = i[1]
@@ -41,10 +47,10 @@ def show_search(srch, entries):
                 lnk = lnk[8:-1]
             
             if len(nm) > 30:
-                nm = str(nm[0:30]+"...")
+                nm = str(nm[0:28]+"...")
             else:
-                nm = str(nm+" "*(33-len(nm)))
-            print(cont, "-", nm," | ",lnk)
+                nm = str(nm+" "*(30-len(nm)))
+            print(cont, "-", nm,"\n |-",lnk,"\n","-"*60)
             cont+=1
             found_entries.append(i)
     if cont == 0:
@@ -71,7 +77,7 @@ def show_search(srch, entries):
             conector.close()
 
 def return_url(entries):
-    '''this sends the selected video url to the clipboard'''
+    '''sends the selected video url to the clipboard'''
     try:
         indx = int(input("  : "))
         url = entries[indx]
@@ -96,6 +102,7 @@ def return_url(entries):
         print("Index out of range...pay attention!")
 
 def in_table(option):
+    '''shows the entries from the selected table'''
     global cursor, conector
     cont = 0
     try:
@@ -110,11 +117,14 @@ def in_table(option):
             if 'https' in lnk:
                 lnk = lnk[8:-1]
                 
-            if len(nm) > 30:
-                nm = str(nm[0:30]+"...")
+            cjk_chars = cjk_pattern.findall(nm) #checks if there is any cjk characther in each entry
+            if cjk_chars:
+                nm = str(nm[0:36]+"...")
+            elif len(nm) > 30:
+                nm = str(nm[0:60]+"...")
             else:
                 nm = str(nm+" "*(33-len(nm)))
-            print(cont, "-", nm," | ",lnk)
+            print(cont, "-", nm,"\n |-",lnk,"\n","-"*60)
             cont+=1
         if cont == 0:
             print("\nNothing here...")
